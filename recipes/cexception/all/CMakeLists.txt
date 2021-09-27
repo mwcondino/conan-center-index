@@ -1,0 +1,37 @@
+cmake_minimum_required(VERSION 3.4)
+project(cexception C)
+
+include(GNUInstallDirs)
+
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup(TARGETS)
+
+find_package(unity)
+
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup()
+
+if(MSVC OR MSVC90 OR MSVC10)
+    set(MSVC ON)
+    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+endif()
+
+set(SOURCE_SUBFOLDER ${CMAKE_CURRENT_SOURCE_DIR}/source_subfolder/lib)
+set(CEXCEPTION_LIBRARY cexception)
+set(CEXCEPTION_TARGETS ${CEXCEPTION_LIBRARY})
+
+add_library(${CEXCEPTION_LIBRARY}  ${SOURCE_SUBFOLDER}/CException.c)
+target_include_directories(${CEXCEPTION_LIBRARY} PRIVATE ${SOURCE_SUBFOLDER})
+
+set_target_properties(${CEXCEPTION_LIBRARY} PROPERTIES VERSION ${CEXCEPTION_VERSION_STRING} SOVERSION ${CEXCEPTION_VERSION_MAJOR})
+
+install(TARGETS ${CEXCEPTION_TARGETS}
+        BUNDLE DESTINATION ${CMAKE_INSTALL_BINDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+install(FILES
+    ${SOURCE_SUBFOLDER}/CException.h
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
