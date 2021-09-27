@@ -1,0 +1,18 @@
+{
+ "options": [
+  [
+   "fPIC",
+   "True"
+  ],
+  [
+   "shared",
+   "False"
+  ]
+ ],
+ "root": {
+  "name": "cmock",
+  "version": null,
+  "user": null,
+  "channel": null
+ }
+}
